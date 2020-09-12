@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lk.hnb.cmms.view;
+package CMMS.FrontEnd;
 
 /**
  *
@@ -183,7 +183,7 @@ public class Login_Form extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Main_Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 1098, Short.MAX_VALUE)
+            .addComponent(Main_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 1098, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
