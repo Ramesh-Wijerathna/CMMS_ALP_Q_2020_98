@@ -5,6 +5,16 @@
  */
 package CMMS.FrontEnd;
 
+import CMMS.Models.Inventory;
+import CMMS.Utilities.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ramesh Wijerathna
@@ -14,8 +24,11 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
     /**
      * Creates new form Add_Equipment_Panel
      */
+    ArrayList <Inventory> inventoryList;
+    
     public Manage_Equi_Panel() {
         initComponents();
+        inventoryList = new ArrayList<>();
     }
 
     /**
@@ -30,13 +43,13 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         jScrollBar1 = new javax.swing.JScrollBar();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        txtEqmtName = new javax.swing.JTextField();
+        txtEqmtModel = new javax.swing.JTextField();
+        txtEqmtSerialNo = new javax.swing.JTextField();
+        txtEqmtValue = new javax.swing.JTextField();
+        txtEqmtInvoiceNo = new javax.swing.JTextField();
+        txtEqmtWarrantyExpDate = new javax.swing.JTextField();
+        txtEqmInvoiceDate = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -48,15 +61,29 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtEqmtID = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
+        txtEqmtWarrantyExpDate.setText("DD/MM/YYYY");
+
+        txtEqmInvoiceDate.setText("DD/MM/YYYY");
+
         jButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButton1.setText("Update Item");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButton2.setText("Delete Item");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -70,32 +97,32 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                         .addGap(29, 29, 29)
                         .addComponent(jButton2))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-                        .addComponent(jTextField3)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jTextField5)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addComponent(txtEqmtName, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                        .addComponent(txtEqmtModel)
+                        .addComponent(txtEqmtSerialNo, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtEqmtValue)
+                        .addComponent(txtEqmtInvoiceNo, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtEqmtWarrantyExpDate, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtEqmInvoiceDate, javax.swing.GroupLayout.Alignment.TRAILING)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(txtEqmtName, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(txtEqmtModel, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(txtEqmtSerialNo, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(txtEqmtValue, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(txtEqmtInvoiceNo, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(txtEqmtWarrantyExpDate, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(txtEqmInvoiceDate, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -166,6 +193,11 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
 
         jButton3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButton3.setText("Search");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(153, 153, 153));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -190,7 +222,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(13, 13, 13)
-                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEqmtID, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -205,7 +237,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtEqmtID, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,6 +258,112 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        try {
+            String EquipID = txtEqmtID.getText();
+            if (EquipID.trim().isEmpty()) {
+                throw new EquipIDNullException();
+            }
+        } catch ( EquipIDNullException ex1 )
+        {
+            JOptionPane.showMessageDialog(this, ex1.getLocalizedMessage(), "Error!", 2);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            String EquipID = txtEqmtID.getText();
+            String EquipName = txtEqmtName.getText();
+        if ( EquipName.trim().isEmpty() )
+        {
+            throw new EquipNameNullException();
+        }
+        String EquipModel = txtEqmtModel.getText();
+        if ( EquipModel.trim().isEmpty())
+        {
+            throw new EquipModelNullException();
+        }
+        String EquipSerNo = txtEqmtSerialNo.getText();
+        if ( EquipSerNo.trim().isEmpty())
+        {
+            throw new EquipSerialNoNullException();
+        }
+        String EquipValue = txtEqmtValue.getText();
+        double EquipVal = Double.parseDouble(EquipValue);
+        if ( EquipValue.trim().isEmpty() || EquipVal <= 0.0 )
+        {
+            throw new EquipValueInvalidException();
+        }
+        String EquipInvNo = txtEqmtInvoiceNo.getText();
+        if ( EquipInvNo.trim().isEmpty())
+        {
+            throw new EquipInvoiceNoNullException();
+        }
+        String EquipWarDate = txtEqmtWarrantyExpDate.getText();
+        Date warntDate = new SimpleDateFormat("dd/MM/yyyy").parse(EquipWarDate);
+            System.out.println("Warranty Date:" + warntDate);
+        Date systemDate = new Date ();
+        System.out.println("System Date:" + systemDate);
+        if ( !EquipWarDate.trim().isEmpty())
+        {
+            if ( warntDate.compareTo(systemDate) < 0 )
+        {
+            throw new EquipInvalidWarrantyDateException();
+        }
+        }
+        String EquipInvDate = txtEqmInvoiceDate.getText();
+        Date invDate = new SimpleDateFormat ("dd/MM/yyyy").parse(EquipInvDate);
+        System.out.println("Invoice Date:" + invDate);
+        if ( EquipInvDate.trim().isEmpty() )
+        {
+            throw new EquipInvoiceDateException();
+        }
+        int issCount = 0;
+        
+        Inventory inv = new Inventory(EquipID, EquipName, EquipModel, EquipSerNo, EquipVal, EquipInvNo, warntDate, invDate, issCount);
+        
+        inventoryList.add(inv);
+        
+        txtEqmtID.setText("");
+        txtEqmtName.setText("");
+        txtEqmtModel.setText("");
+        txtEqmtSerialNo.setText("");
+        txtEqmtValue.setText("");
+        txtEqmtInvoiceNo.setText("");
+        txtEqmtWarrantyExpDate.setText("DD/MM/YYYY");
+        txtEqmInvoiceDate.setText("DD/MM/YYYY");
+        } catch ( EquipNameNullException ex2 )
+        {
+            JOptionPane.showMessageDialog(this, ex2.getLocalizedMessage(), "Error!", 2);
+        } catch ( EquipModelNullException ex3 )
+        {
+            JOptionPane.showMessageDialog(this, ex3.getLocalizedMessage(), "Error!", 2);
+        } catch ( EquipSerialNoNullException ex4 )
+        {
+            JOptionPane.showMessageDialog(this, ex4.getLocalizedMessage(), "Error!", 2);
+        } catch ( EquipValueInvalidException ex5 )
+        {
+            JOptionPane.showMessageDialog(this, ex5.getLocalizedMessage(), "Error!", 2);
+        } catch ( EquipInvoiceNoNullException ex6 )
+        {
+            JOptionPane.showMessageDialog(this, ex6.getLocalizedMessage(), "Error!", 2);
+        } catch ( EquipInvalidWarrantyDateException ex7 )
+        {
+            JOptionPane.showMessageDialog(this, ex7.getLocalizedMessage(), "Error!", 2);
+        } catch ( EquipInvoiceDateException ex8 )
+        {
+            JOptionPane.showMessageDialog(this, ex8.getLocalizedMessage(), "Error!", 2);
+        } catch (ParseException ex9) {
+            Logger.getLogger(Add_Equipment_Panel.class.getName()).log(Level.SEVERE, null, ex9);
+            JOptionPane.showMessageDialog(this, "Invalid Date(s)!\n (Please enter valid Date(s))", "Error!", 2);
+        } 
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -244,13 +382,13 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField txtEqmInvoiceDate;
+    private javax.swing.JTextField txtEqmtID;
+    private javax.swing.JTextField txtEqmtInvoiceNo;
+    private javax.swing.JTextField txtEqmtModel;
+    private javax.swing.JTextField txtEqmtName;
+    private javax.swing.JTextField txtEqmtSerialNo;
+    private javax.swing.JTextField txtEqmtValue;
+    private javax.swing.JTextField txtEqmtWarrantyExpDate;
     // End of variables declaration//GEN-END:variables
 }

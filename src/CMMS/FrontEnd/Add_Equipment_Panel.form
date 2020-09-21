@@ -91,11 +91,11 @@
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="txtEqmtName" max="32767" attributes="0"/>
-                          <Component id="txtEqmModel" max="32767" attributes="0"/>
+                          <Component id="txtEqmtModel" max="32767" attributes="0"/>
                           <Component id="txtEqmtSerialNo" alignment="1" max="32767" attributes="0"/>
                           <Component id="txtEqmtValue" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtEqmtInvoiceNo" alignment="1" max="32767" attributes="0"/>
-                          <Component id="txtEqmWarrantyExpDate" alignment="1" max="32767" attributes="0"/>
+                          <Component id="txtEqmtWarrantyExpDate" alignment="1" max="32767" attributes="0"/>
                           <Component id="txtEqmtID" alignment="1" pref="405" max="32767" attributes="0"/>
                           <Component id="txtEqmInvoiceDate" alignment="1" max="32767" attributes="0"/>
                       </Group>
@@ -111,7 +111,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="txtEqmtName" pref="50" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtEqmModel" pref="50" max="32767" attributes="0"/>
+                      <Component id="txtEqmtModel" pref="50" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="txtEqmtSerialNo" pref="50" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -119,7 +119,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="txtEqmtInvoiceNo" pref="50" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtEqmWarrantyExpDate" pref="50" max="32767" attributes="0"/>
+                      <Component id="txtEqmtWarrantyExpDate" pref="50" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="txtEqmInvoiceDate" pref="50" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
@@ -130,7 +130,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextField" name="txtEqmtName">
             </Component>
-            <Component class="javax.swing.JTextField" name="txtEqmModel">
+            <Component class="javax.swing.JTextField" name="txtEqmtModel">
             </Component>
             <Component class="javax.swing.JTextField" name="txtEqmtSerialNo">
             </Component>
@@ -138,11 +138,17 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtEqmtInvoiceNo">
             </Component>
-            <Component class="javax.swing.JTextField" name="txtEqmWarrantyExpDate">
+            <Component class="javax.swing.JTextField" name="txtEqmtWarrantyExpDate">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="DD/MM/YYYY"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtEqmtID">
             </Component>
             <Component class="javax.swing.JTextField" name="txtEqmInvoiceDate">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="DD/MM/YYYY"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -272,6 +278,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Add Item"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>

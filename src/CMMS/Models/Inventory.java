@@ -11,27 +11,29 @@ package CMMS.Models;
  */
 import java.util.Date;
 public class Inventory {
-    int inID;
-    String itemName;
-    String model;
-    String selialNumber;
-    Double itemValue;
-    int invNum;
-    Date invDate;
-    int issCount;
+    private String inID;
+    private String itemName;
+    private String model;
+    private String selialNumber;
+    private Double itemValue;
+    private String invNum;
+    private Date invDate;
+    private Date WarntDate;
+    private int issCount;
 
-    public Inventory(int inID, String itemName, String model, String selialNumber, Double itemValue, int invNum, Date invDate, int issCount) {
+    public Inventory(String inID, String itemName, String model, String selialNumber, Double itemValue, String invNum, Date WarntDate, Date invDate, int issCount) {
         this.inID = inID;
         this.itemName = itemName;
         this.model = model;
         this.selialNumber = selialNumber;
         this.itemValue = itemValue;
         this.invNum = invNum;
+        this.WarntDate = WarntDate;
         this.invDate = invDate;
         this.issCount = issCount;
     }
 
-    public int getInID() {
+    public String getInID() {
         return inID;
     }
 
@@ -51,8 +53,12 @@ public class Inventory {
         return itemValue;
     }
 
-    public int getInvNum() {
+    public String getInvNum() {
         return invNum;
+    }
+
+    public Date getWarntDate() {
+        return WarntDate;
     }
 
     public Date getInvDate() {
