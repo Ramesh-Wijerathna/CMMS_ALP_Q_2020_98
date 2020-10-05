@@ -26,7 +26,7 @@ public class DatabaseConnection {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Class Done");
-            connection = DriverManager.getConnection("jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12364868", "sql12364868", "NBGmt6Kh5h");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cmmsdb", "root", "");
             System.out.println("Connection Done");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);

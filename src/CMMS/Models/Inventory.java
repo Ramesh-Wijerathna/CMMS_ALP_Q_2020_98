@@ -15,19 +15,23 @@ public class Inventory {
     private String itemName;
     private String model;
     private String selialNumber;
-    private Double itemValue;
+    private int itemValue;
     private String invNum;
+    private int supID;
+    private int brnID;
     private Date invDate;
     private Date WarntDate;
     private int issCount;
 
-    public Inventory(String inID, String itemName, String model, String selialNumber, Double itemValue, String invNum, Date WarntDate, Date invDate, int issCount) {
+    public Inventory(String inID, String itemName, String model, String selialNumber, int itemValue, String invNum, int supID, int brnID, Date WarntDate, Date invDate, int issCount) {
         this.inID = inID;
         this.itemName = itemName;
         this.model = model;
         this.selialNumber = selialNumber;
         this.itemValue = itemValue;
         this.invNum = invNum;
+        this.supID = supID;
+        this.brnID = brnID;
         this.WarntDate = WarntDate;
         this.invDate = invDate;
         this.issCount = issCount;
@@ -49,12 +53,20 @@ public class Inventory {
         return selialNumber;
     }
 
-    public Double getItemValue() {
+    public int getItemValue() {
         return itemValue;
     }
 
     public String getInvNum() {
         return invNum;
+    }
+
+    public int getSupID() {
+        return supID;
+    }
+
+    public int getBrnID() {
+        return brnID;
     }
 
     public Date getWarntDate() {
