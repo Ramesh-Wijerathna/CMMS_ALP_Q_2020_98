@@ -87,10 +87,13 @@ public class Login_Form extends javax.swing.JFrame {
             .addGroup(Login_PanelLayout.createSequentialGroup()
                 .addGroup(Login_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Login_PanelLayout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addGroup(Login_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                        .addGroup(Login_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Login_PanelLayout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(Login_PanelLayout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(Login_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField3)
@@ -102,7 +105,7 @@ public class Login_Form extends javax.swing.JFrame {
                     .addGroup(Login_PanelLayout.createSequentialGroup()
                         .addGap(210, 210, 210)
                         .addComponent(jLabel4)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         Login_PanelLayout.setVerticalGroup(
             Login_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +128,7 @@ public class Login_Form extends javax.swing.JFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel3)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
 
         Banner_Panel.setBackground(new java.awt.Color(102, 102, 102));
@@ -183,7 +186,7 @@ public class Login_Form extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Main_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 1098, Short.MAX_VALUE)
+            .addComponent(Main_Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 1098, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

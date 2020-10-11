@@ -49,7 +49,7 @@
               <Group type="102" attributes="0">
                   <Component id="Tab_Panel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="System_Panel" max="32767" attributes="0"/>
+                  <Component id="System_Panel" pref="967" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Component id="jPanel1" max="32767" attributes="0"/>

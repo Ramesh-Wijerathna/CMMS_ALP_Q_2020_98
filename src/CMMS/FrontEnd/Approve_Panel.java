@@ -5,6 +5,11 @@
  */
 package CMMS.FrontEnd;
 
+import CMMS.Models.Maintenance_Issue;
+import CMMS.ServiceLayer.ApproveServiceLayer;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Ramesh Wijerathna
@@ -16,6 +21,8 @@ public class Approve_Panel extends javax.swing.JPanel {
      */
     public Approve_Panel() {
         initComponents();
+        
+        GetAllIssues();
     }
 
     /**
@@ -29,59 +36,35 @@ public class Approve_Panel extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDetails = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Maintenance  ID", "Branch ID", "Inventory ID", "Supplier ID", "Maintenance Office Email", "Issue Flag", "Issue Details", "Issu Receive Data", "Issue Expire Date", "Status", "Approval Status"
             }
         ));
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-            jTable1.getColumnModel().getColumn(10).setResizable(false);
+        tblDetails.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jScrollPane1.setViewportView(tblDetails);
+        if (tblDetails.getColumnModel().getColumnCount() > 0) {
+            tblDetails.getColumnModel().getColumn(0).setResizable(false);
+            tblDetails.getColumnModel().getColumn(1).setResizable(false);
+            tblDetails.getColumnModel().getColumn(2).setResizable(false);
+            tblDetails.getColumnModel().getColumn(3).setResizable(false);
+            tblDetails.getColumnModel().getColumn(4).setResizable(false);
+            tblDetails.getColumnModel().getColumn(5).setResizable(false);
+            tblDetails.getColumnModel().getColumn(6).setResizable(false);
+            tblDetails.getColumnModel().getColumn(7).setResizable(false);
+            tblDetails.getColumnModel().getColumn(8).setResizable(false);
+            tblDetails.getColumnModel().getColumn(9).setResizable(false);
+            tblDetails.getColumnModel().getColumn(10).setResizable(false);
         }
 
         jLabel1.setBackground(new java.awt.Color(153, 153, 153));
@@ -146,10 +129,50 @@ public class Approve_Panel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void GetAllIssues(){
+        
+        ArrayList<Maintenance_Issue> issueList = ApproveServiceLayer.GetAllIssues();
+        
+        DefaultTableModel dtm = (DefaultTableModel) tblDetails.getModel();
+        
+        for (Maintenance_Issue mi : issueList){
+            
+            Object [] rowData = {
+                mi.getMntID(),
+                mi.getBrnID(),
+                mi.getIntID(),
+                mi.getSupID(),
+                mi.getMntEmail(),
+                mi.getIssFlag(),
+                mi.getIssFlag(),
+                mi.getIssRecDat(),
+                mi.getStatus(),
+                mi.getApprovalStat()
+                
+            };
+            
+            
+            dtm.addRow(rowData);
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -158,7 +181,7 @@ public class Approve_Panel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblDetails;
     // End of variables declaration//GEN-END:variables
 }

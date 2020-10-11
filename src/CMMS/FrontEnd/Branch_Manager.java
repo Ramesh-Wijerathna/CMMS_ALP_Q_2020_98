@@ -16,6 +16,8 @@ public class Branch_Manager extends javax.swing.JFrame {
      */
     public Branch_Manager() {
         initComponents();
+        setExtendedState(MAXIMIZED_BOTH);
+     
     }
 
     /**
@@ -39,6 +41,7 @@ public class Branch_Manager extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Branch User");
+        setResizable(false);
 
         Main_Panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -146,8 +149,8 @@ public class Branch_Manager extends javax.swing.JFrame {
             .addGroup(Main_PanelLayout.createSequentialGroup()
                 .addComponent(Tab_Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Change_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(Change_Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 1323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         Main_PanelLayout.setVerticalGroup(

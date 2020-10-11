@@ -5,6 +5,13 @@
  */
 package CMMS.FrontEnd;
 
+import CMMS.DatabaseLayer.DatabaseConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Ramesh Wijerathna
@@ -170,6 +177,11 @@ public class Add_Equipment_Panel extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButton1.setText("Add Item");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButton2.setText("Clear");
@@ -228,6 +240,27 @@ public class Add_Equipment_Panel extends javax.swing.JPanel {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            String s = "insert into testtable values(20,10)";
+            
+            Connection connection = DatabaseConnection.getInstance().getConnection();
+            
+            PreparedStatement ps = connection.prepareStatement(s);
+            
+             boolean result = ps.executeUpdate() > 0;
+             
+             System.out.println(result);
+            
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Add_Equipment_Panel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Add_Equipment_Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

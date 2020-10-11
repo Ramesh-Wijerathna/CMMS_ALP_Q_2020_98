@@ -28,6 +28,27 @@ public class Branch {
         this.brnRegionID = brnRegionID;
     }
 
+    public Branch(String brnAddr, int brnConNum, String brnEmail, String userName, String password, int brnRegionID) {
+        this.brnAddr = brnAddr;
+        this.brnConNum = brnConNum;
+        this.brnEmail = brnEmail;
+        this.userName = userName;
+        this.password = password;
+        this.brnRegionID = brnRegionID;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public int getBrnID() {
         return brnID;
     }
