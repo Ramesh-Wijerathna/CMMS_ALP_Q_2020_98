@@ -8,6 +8,7 @@ package CMMS.ServiceLayer;
 import CMMS.DatabaseLayer.DatabaseConnection;
 import CMMS.Models.Inventory;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,7 +62,9 @@ public class EquipmentServiceLayer {
         
         try {
             connection = DatabaseConnection.getInstance().getConnection();
-            pst = connection.prepareStatement("UPDATE `inventory` SET `itmName`='" + inv1.getItemName() + "' ,`model`= '" + inv1.getModel() + "' ,`serialNo`= '" + inv1.getSelialNumber() + "' ,`value`= " + inv1.getItemValue() + ",`invNo`= '" + inv1.getInvNum() + "' ,`brnID`=" + inv1.getBrnID() + ", `supID`=" + inv1.getSupID() + ",`warrantyExpDate`= " + inv1.getWarntDate() + ",`invDate`= " + inv1.getInvDate() + ",`issueCount`=" + inv1.getIssCount() + " WHERE `invID`='" + invID + "'");
+            java.sql.Date wdate = new java.sql.Date (inv1.getWarntDate().getTime());
+            java.sql.Date indate = new java.sql.Date ( inv1.getInvDate().getTime());
+            pst = connection.prepareStatement("UPDATE `inventory` SET `itmName`='" + inv1.getItemName() + "' ,`model`= '" + inv1.getModel() + "' ,`serialNo`= '" + inv1.getSelialNumber() + "' ,`value`= " + inv1.getItemValue() + ",`invNo`= '" + inv1.getInvNum() + "' ,`brnID`=" + inv1.getBrnID() + ", `supID`='" + inv1.getSupID() + "',`warrantyExpDate`= '" + wdate + "',`invDate`= '" + indate + "',`issueCount`=" + inv1.getIssCount() + " WHERE `invID`= '" + invID + "'");
             
             boolean result = pst.executeUpdate() > 0;
             return result;
@@ -100,7 +103,7 @@ public class EquipmentServiceLayer {
             ArrayList<Inventory> InventoryDetails = new ArrayList<>();
             
             while (rst.next()) {
-                Inventory inv = new Inventory(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4), rst.getInt(5), rst.getString(6), rst.getInt(7), rst.getInt(8), rst.getDate(9), rst.getDate(10), rst.getInt(11));
+                Inventory inv = new Inventory(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4), rst.getInt(5), rst.getString(6), rst.getInt(7), rst.getString(8), rst.getDate(9), rst.getDate(10), rst.getInt(11));
                 InventoryDetails.add(inv);
             }
             return InventoryDetails;
@@ -111,4 +114,29 @@ public class EquipmentServiceLayer {
         }
         return null;
     }
+    
+    public static ArrayList<Inventory> GetAllEquipments ()
+    {
+        try {
+            connection = DatabaseConnection.getInstance().getConnection();
+            stmt = connection.createStatement();
+            rst  = stmt.executeQuery("SELECT * FROM `inventory`");
+            
+            ArrayList <Inventory> AllequipmentDetails = new ArrayList<>();
+            
+            while (rst.next())
+            {
+                Inventory eqp = new Inventory(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4), rst.getInt(5), rst.getString(6), rst.getInt(7), rst.getString(8), rst.getDate(9), rst.getDate(10), rst.getInt(11));
+                AllequipmentDetails.add(eqp);
+            }
+            return AllequipmentDetails;
+                    } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EquipmentServiceLayer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(EquipmentServiceLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
 }

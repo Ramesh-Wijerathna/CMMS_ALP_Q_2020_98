@@ -327,7 +327,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                     txtEqmtSerialNo.setText(inv.getSelialNumber());
                     txtEqmtValue.setText(Integer.toString(inv.getItemValue()));
                     txtEqmtInvoiceNo.setText(inv.getInvNum());
-                    txtSupID.setText(Integer.toString(inv.getSupID()));
+                    txtSupID.setText(inv.getSupID());
                     txtBrnID.setText(Integer.toString(inv.getBrnID()));
                     
                     Date wdate = inv.getWarntDate();  
@@ -351,8 +351,11 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
             txtEqmtSerialNo.setText("");
             txtEqmtValue.setText("");
             txtEqmtInvoiceNo.setText("");
+            txtBrnID.setText("");
+            txtSupID.setText("");
             txtEqmtWarrantyExpDate.setText("DD/MM/YYYY");
             txtEqmInvoiceDate.setText("DD/MM/YYYY");
+            txtIsuCount.setText("");
             
             JOptionPane.showMessageDialog(this, "Data Record Is Not Available!");
             }
@@ -392,8 +395,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
             throw new EquipInvoiceNoNullException();
         }
         String EquipSupID = txtSupID.getText();
-        int EquipSID = Integer.parseInt(EquipSupID);
-        if ( EquipSupID.trim().isEmpty() || EquipSID <= 0 )
+        if ( EquipSupID.trim().isEmpty() )
         {
             throw new EquipSupIDNullException();
         }
@@ -424,7 +426,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         }
         String isCount = txtIsuCount.getText();
         int issCount = Integer.parseInt(isCount);
-        if ( EquipSupID.trim().isEmpty() || EquipSID <= 0 )
+        if ( isCount.trim().isEmpty() || issCount < 0 )
         {
             throw new EquipmentInvalidIssueCount();
         }
@@ -433,7 +435,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         
         if (InventoryDetails.size() > 0 )
         {
-            Inventory inv = new Inventory(EquipID, EquipName, EquipModel, EquipSerNo, EquipVal, EquipInvNo, EquipSID, EquipBID, warntDate, invDate, issCount);
+            Inventory inv = new Inventory(EquipID, EquipName, EquipModel, EquipSerNo, EquipVal, EquipInvNo, EquipBID, EquipSupID, warntDate, invDate, issCount);
             boolean result = EquipmentServiceLayer.UpdateEquipment(EquipID, inv);
             
             if (result) {
@@ -443,8 +445,11 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
             txtEqmtSerialNo.setText("");
             txtEqmtValue.setText("");
             txtEqmtInvoiceNo.setText("");
+            txtBrnID.setText("");
+            txtSupID.setText("");
             txtEqmtWarrantyExpDate.setText("DD/MM/YYYY");
             txtEqmInvoiceDate.setText("DD/MM/YYYY");
+            txtIsuCount.setText("");
             
             JOptionPane.showMessageDialog(this, "Record updated successfully!");
             }
@@ -481,6 +486,12 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         } catch ( EquipmentInvalidIssueCount ex10 )
         {
             JOptionPane.showMessageDialog(this, ex10.getLocalizedMessage(), "Error!", 2);
+        } catch ( EquipBranchIDNullException ex11 )
+        {
+            JOptionPane.showMessageDialog(this, ex11.getLocalizedMessage(), "Error!", 2);
+        } catch ( EquipSupIDNullException ex12 )
+        {
+            JOptionPane.showMessageDialog(this, ex12.getLocalizedMessage(), "Error!", 2);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -498,6 +509,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
             txtEqmtInvoiceNo.setText("");
             txtEqmtWarrantyExpDate.setText("DD/MM/YYYY");
             txtEqmInvoiceDate.setText("DD/MM/YYYY");
+            txtIsuCount.setText("");
             JOptionPane.showMessageDialog(this, "Record deleted successfully!");
         } else {
             JOptionPane.showMessageDialog(this, "Data record is not available to update!");

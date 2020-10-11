@@ -283,8 +283,7 @@ public class Add_Equipment_Panel extends javax.swing.JPanel {
             throw new EquipInvoiceNoNullException();
         }
         String EquipSupID = txtSupID.getText();
-        int EquipSID = Integer.parseInt(EquipSupID);
-        if ( EquipSupID.trim().isEmpty() || EquipSID <= 0 )
+        if ( EquipSupID.trim().isEmpty())
         {
             throw new EquipSupIDNullException();
         }
@@ -315,7 +314,7 @@ public class Add_Equipment_Panel extends javax.swing.JPanel {
         }
         int issCount = 0;
         
-        Inventory inv = new Inventory(EquipID, EquipName, EquipModel, EquipSerNo, EquipVal, EquipInvNo, EquipSID, EquipBID, warntDate, invDate, issCount);
+        Inventory inv = new Inventory(EquipID, EquipName, EquipModel, EquipSerNo, EquipVal, EquipInvNo, EquipBID, EquipSupID, warntDate, invDate, issCount);
         
         //inventoryList.add(inv);
         
