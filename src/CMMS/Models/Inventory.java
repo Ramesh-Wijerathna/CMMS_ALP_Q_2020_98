@@ -22,8 +22,9 @@ public class Inventory {
     private Date invDate;
     private Date WarntDate;
     private int issCount;
+    private String status;
 
-    public Inventory(String inID, String itemName, String model, String selialNumber, int itemValue, String invNum, int brnID, String supID, Date WarntDate, Date invDate, int issCount) {
+    public Inventory(String inID, String itemName, String model, String selialNumber, int itemValue, String invNum, int brnID, String supID, Date WarntDate, Date invDate, int issCount, String status) {
         this.inID = inID;
         this.itemName = itemName;
         this.model = model;
@@ -35,6 +36,7 @@ public class Inventory {
         this.WarntDate = WarntDate;
         this.invDate = invDate;
         this.issCount = issCount;
+        this.status = status;
     }
 
     public String getInID() {
@@ -79,6 +81,10 @@ public class Inventory {
 
     public int getIssCount() {
         return issCount;
+    }
+
+    public String getStatus() {
+        return status;
     }
     
 }

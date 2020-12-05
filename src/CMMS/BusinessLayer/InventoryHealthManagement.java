@@ -29,11 +29,15 @@ public class InventoryHealthManagement {
     public static String CountIssues ( String invID )
     {
         try {
+            //Fetching system time in miliseconds
             long present=System.currentTimeMillis();  
-            java.sql.Date cdate = new java.sql.Date( present) ;
+            //Converting system time into sql date type
+            java.sql.Date cdate = new java.sql.Date(present) ;
             LocalDate CurrentDate = LocalDate.now();
+            //Getting the value of the previous month
             LocalDate EndDate = CurrentDate.minusMonths( 1 );
             java.sql.Date edate;
+            //Converting value into sql date type
             edate = java.sql.Date.valueOf( EndDate );
             connection = DatabaseConnection.getInstance().getConnection();
             stmt = connection.createStatement();

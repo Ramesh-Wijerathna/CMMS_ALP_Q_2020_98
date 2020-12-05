@@ -72,12 +72,19 @@
 					<text><![CDATA[Inventory Report]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="SubTitle" x="534" y="37" width="232" height="29" uuid="eecab064-fa3c-42ab-ad63-d762f025d46e"/>
+					<reportElement style="SubTitle" x="534" y="37" width="111" height="29" uuid="eecab064-fa3c-42ab-ad63-d762f025d46e"/>
 					<textElement textAlignment="Justified">
 						<font size="22" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Head Office:]]></text>
+					<text><![CDATA[Branch ID: ]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="645" y="37" width="110" height="29" forecolor="#CCCCCC" uuid="321c8a0d-6e2d-46cc-9558-a68ab8cb8d07"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Source Code Pro Light" size="22" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{brnID}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<frame>
 				<reportElement mode="Opaque" x="0" y="70" width="960" height="32" forecolor="#000000" backcolor="#FCA438" uuid="a5639e4e-65c6-4b27-8b7a-81a49b9a4939"/>
@@ -115,39 +122,32 @@
 				<text><![CDATA[Item Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="174" y="0" width="105" height="18" forecolor="#000000" uuid="dd0fffaa-a167-4c09-a12a-ef3ceef936bf"/>
+				<reportElement style="Column header" x="174" y="0" width="172" height="18" forecolor="#000000" uuid="dd0fffaa-a167-4c09-a12a-ef3ceef936bf"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Model]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="281" y="0" width="67" height="18" forecolor="#000000" uuid="83e388af-ebd9-4558-9849-bbf52154347c"/>
+				<reportElement style="Column header" x="348" y="0" width="67" height="18" forecolor="#000000" uuid="83e388af-ebd9-4558-9849-bbf52154347c"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Serial No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="348" y="0" width="57" height="18" forecolor="#000000" uuid="3e431c09-ae96-4936-b272-ee6d69f18169"/>
+				<reportElement style="Column header" x="420" y="0" width="57" height="18" forecolor="#000000" uuid="3e431c09-ae96-4936-b272-ee6d69f18169"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Value ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="405" y="0" width="72" height="18" forecolor="#000000" uuid="42c42d5c-4d00-41fd-b173-99c27a93835e"/>
+				<reportElement style="Column header" x="477" y="0" width="72" height="18" forecolor="#000000" uuid="42c42d5c-4d00-41fd-b173-99c27a93835e"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Invoice No]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="477" y="0" width="72" height="18" forecolor="#000000" uuid="a90062e3-9289-4628-9c66-aa70f8fda7e2"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Branch ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="549" y="0" width="82" height="18" forecolor="#000000" uuid="f37aa842-5989-418f-be64-78778841ee28"/>
@@ -198,39 +198,32 @@
 					<textFieldExpression><![CDATA[$F{itmName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="174" y="0" width="105" height="18" uuid="5a4b031c-a3d4-4efb-a54d-831bf7e07872"/>
+					<reportElement style="Detail" positionType="Float" x="174" y="0" width="172" height="18" uuid="5a4b031c-a3d4-4efb-a54d-831bf7e07872"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{model}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="279" y="0" width="69" height="18" uuid="8726b062-2b40-4943-872a-650e3b9664ad"/>
+					<reportElement style="Detail" positionType="Float" x="346" y="0" width="69" height="18" uuid="8726b062-2b40-4943-872a-650e3b9664ad"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{serialNo}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="348" y="0" width="57" height="18" uuid="a2e1720a-508f-490b-a967-4ef81bbc286d"/>
+					<reportElement style="Detail" positionType="Float" x="420" y="0" width="57" height="18" uuid="a2e1720a-508f-490b-a967-4ef81bbc286d"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="405" y="0" width="72" height="18" uuid="50e9e2b1-71ff-4ea4-8bcc-58ad721148e1"/>
+					<reportElement style="Detail" positionType="Float" x="477" y="0" width="72" height="18" uuid="50e9e2b1-71ff-4ea4-8bcc-58ad721148e1"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{invNo}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="477" y="0" width="72" height="18" uuid="11d857e0-9f23-4a65-b881-deba559dbe75"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="14"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{brnID}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" positionType="Float" x="549" y="0" width="82" height="18" uuid="fae44582-a703-4926-a7d2-23ea60dc1349"/>

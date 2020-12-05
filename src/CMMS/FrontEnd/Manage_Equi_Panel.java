@@ -6,6 +6,7 @@
 package CMMS.FrontEnd;
 
 import CMMS.Models.Inventory;
+import CMMS.Models.Supplier;
 import CMMS.ServiceLayer.EquipmentServiceLayer;
 import CMMS.Utilities.*;
 import java.text.DateFormat;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,12 +29,34 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
      * Creates new form Add_Equipment_Panel
      */
     ArrayList <Inventory> inventoryList;
+    int branchID = 0;
     
-    public Manage_Equi_Panel() {
+    public Manage_Equi_Panel( String brID ) {
         initComponents();
+        branchID = Integer.parseInt(brID);
         inventoryList = new ArrayList<>();
+        //Add to service button is hidden
+        btnAddToServ.setVisible(false);
+        LoadSuppliers ();
     }
 
+    //Fetching suplliers information for inventory table
+    public void LoadSuppliers ()
+    {
+        ArrayList <Supplier> sup = EquipmentServiceLayer.GetAllSuppliers();
+        
+        DefaultTableModel tbl = ( DefaultTableModel ) tblSupplier.getModel();
+        tbl.setRowCount(0);
+        
+        for ( Supplier sp : sup )
+        {
+            Object[] rowData = {
+            sp.getSup_ID(),
+            sp.getCompName()
+            };
+            tbl.addRow(rowData);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,6 +81,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         txtBrnID = new javax.swing.JTextField();
         txtSupID = new javax.swing.JTextField();
         txtIsuCount = new javax.swing.JTextField();
+        btnAddToServ = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -72,12 +97,15 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         txtEqmtID = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblSupplier = new javax.swing.JTable();
 
         txtEqmtWarrantyExpDate.setText("DD/MM/YYYY");
 
         txtEqmInvoiceDate.setText("DD/MM/YYYY");
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton1.setText("Update Item");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,11 +113,19 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton2.setText("Delete Item");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        btnAddToServ.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAddToServ.setText("Add to service");
+        btnAddToServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddToServActionPerformed(evt);
             }
         });
 
@@ -98,35 +134,25 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtIsuCount)
+                    .addComponent(txtSupID)
+                    .addComponent(txtEqmtInvoiceNo)
+                    .addComponent(txtEqmtValue)
+                    .addComponent(txtEqmtSerialNo)
+                    .addComponent(txtBrnID, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jButton1)
-                                .addGap(29, 29, 29)
-                                .addComponent(jButton2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(txtEqmInvoiceDate, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(txtEqmtWarrantyExpDate, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtIsuCount)
-                            .addComponent(txtSupID)
-                            .addComponent(txtEqmtInvoiceNo)
-                            .addComponent(txtEqmtValue)
-                            .addComponent(txtEqmtSerialNo)
-                            .addComponent(txtBrnID, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtEqmtModel, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEqmtName, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddToServ, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                        .addGap(0, 7, Short.MAX_VALUE))
+                    .addComponent(txtEqmtWarrantyExpDate, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtEqmInvoiceDate, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtEqmtModel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtEqmtName, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -152,10 +178,11 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                 .addComponent(txtEqmInvoiceDate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtIsuCount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGap(18, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(btnAddToServ))
                 .addContainerGap())
         );
 
@@ -181,10 +208,10 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         jLabel9.setText("Invoice Date  : ");
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel10.setText("Branch ID");
+        jLabel10.setText("Branch ID :");
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel11.setText("Supplier ID");
+        jLabel11.setText("Supplier ID :");
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel12.setText("Issue Count :");
@@ -276,7 +303,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,18 +325,109 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        tblSupplier.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Supplier ID", "Supllier Company Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSupplierMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblSupplier);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 24, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //Search button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         try {
@@ -318,7 +436,8 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                 throw new EquipIDNullException();
             }
             
-            ArrayList <Inventory> InventoryDetails = EquipmentServiceLayer.SearchEquipment(EquipID);
+            //Populating text fields in form from database
+            ArrayList <Inventory> InventoryDetails = EquipmentServiceLayer.SearchEquipment(EquipID, branchID);
             if ( InventoryDetails.size() > 0 )
             {
                 for (Inventory inv : InventoryDetails){
@@ -330,11 +449,15 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                     txtSupID.setText(inv.getSupID());
                     txtBrnID.setText(Integer.toString(inv.getBrnID()));
                     
-                    Date wdate = inv.getWarntDate();  
+                    Date wdate = inv.getWarntDate();
+                    if ( wdate != null){
                     DateFormat wdateFormat = new SimpleDateFormat("dd/MM/yyyy");  
                     String warrDate = wdateFormat.format(wdate);  
                     
                     txtEqmtWarrantyExpDate.setText(warrDate);
+                    } else {
+                        txtEqmtWarrantyExpDate.setText("DD/MM/YYYY");
+                    }
                     
                     Date idate = inv.getInvDate();  
                     DateFormat idateFormat = new SimpleDateFormat("dd/MM/yyyy");  
@@ -342,6 +465,11 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
                     
                     txtEqmInvoiceDate.setText(invDate);
                     txtIsuCount.setText(Integer.toString(inv.getIssCount()));
+                    if ( inv.getStatus().substring(0,3).compareTo("Out") == 0 ){
+                    btnAddToServ.setVisible(true);
+                    } else {
+                    btnAddToServ.setVisible(false);
+                    }
                 }   
             }
             else {
@@ -357,17 +485,24 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
             txtEqmInvoiceDate.setText("DD/MM/YYYY");
             txtIsuCount.setText("");
             
-            JOptionPane.showMessageDialog(this, "Data Record Is Not Available!");
+            JOptionPane.showMessageDialog(this, "Data Record Is Not Available!", "Error!", 2);
             }
         } catch ( EquipIDNullException ex1 )
         {
             JOptionPane.showMessageDialog(this, ex1.getLocalizedMessage(), "Error!", 2);
+        } catch ( NumberFormatException nex1)
+        {
+            JOptionPane.showMessageDialog(this, "Invalid Data Type: \n"+nex1.getLocalizedMessage(), "Error!", 2);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    //Update button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             String EquipID = txtEqmtID.getText();
+            if (EquipID.trim().isEmpty()) {
+                throw new EquipIDNullException();
+            }
             String EquipName = txtEqmtName.getText();
         if ( EquipName.trim().isEmpty() )
         {
@@ -406,38 +541,40 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
             throw new EquipBranchIDNullException();
         }
         String EquipWarDate = txtEqmtWarrantyExpDate.getText();
-        Date warntDate = new SimpleDateFormat("dd/MM/yyyy").parse(EquipWarDate);
-            System.out.println("Warranty Date:" + warntDate);
+        //Checking whether the Warranty section is empty or not
+        Date warntDate = null;
+        if ( !( EquipWarDate.compareTo("DD/MM/YYYY") == 0 ) )
+        {
+            warntDate = new SimpleDateFormat("dd/MM/yyyy").parse(EquipWarDate);
+        }
+        
         Date systemDate = new Date ();
-        System.out.println("System Date:" + systemDate);
-        if ( !EquipWarDate.trim().isEmpty())
-        {
-            if ( warntDate.compareTo(systemDate) < 0 )
-        {
-            throw new EquipInvalidWarrantyDateException();
-        }
-        }
         String EquipInvDate = txtEqmInvoiceDate.getText();
         Date invDate = new SimpleDateFormat ("dd/MM/yyyy").parse(EquipInvDate);
-        System.out.println("Invoice Date:" + invDate);
-        if ( EquipInvDate.trim().isEmpty() )
+        if ( EquipInvDate.trim().isEmpty() || ( invDate.compareTo(systemDate) > 0 ) )
         {
             throw new EquipInvoiceDateException();
         }
+         //Checking whether the warranty date is valid or not whether comparing with invoice date
+        if ((warntDate != null )&&(warntDate.compareTo(invDate) < 0))
+        {
+            throw new EquipInvalidWarrantyDateException();
+        }
+        
         String isCount = txtIsuCount.getText();
         int issCount = Integer.parseInt(isCount);
         if ( isCount.trim().isEmpty() || issCount < 0 )
         {
             throw new EquipmentInvalidIssueCount();
         }
-        
-        ArrayList <Inventory> InventoryDetails = EquipmentServiceLayer.SearchEquipment(EquipID);
+       
+        ArrayList <Inventory> InventoryDetails = EquipmentServiceLayer.SearchEquipment(EquipID, branchID);
         
         if (InventoryDetails.size() > 0 )
         {
-            Inventory inv = new Inventory(EquipID, EquipName, EquipModel, EquipSerNo, EquipVal, EquipInvNo, EquipBID, EquipSupID, warntDate, invDate, issCount);
-            boolean result = EquipmentServiceLayer.UpdateEquipment(EquipID, inv);
-            
+            Inventory inv = new Inventory(EquipID, EquipName, EquipModel, EquipSerNo, EquipVal, EquipInvNo, EquipBID, EquipSupID, warntDate, invDate, issCount, "");
+            //boolean result = EquipmentServiceLayer.UpdateEquipment(EquipID, inv, branchID);
+            boolean result = true;
             if (result) {
             txtEqmtID.setText("");
             txtEqmtName.setText("");
@@ -455,7 +592,7 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
             }
             
         } else {
-            JOptionPane.showMessageDialog(this, "Data record is not available to update!");
+            JOptionPane.showMessageDialog(this, "Data record is not available to update!", "Error!", 2);
         }
         
         
@@ -492,13 +629,22 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
         } catch ( EquipSupIDNullException ex12 )
         {
             JOptionPane.showMessageDialog(this, ex12.getLocalizedMessage(), "Error!", 2);
+        } catch ( EquipIDNullException ex13 )
+        {
+            JOptionPane.showMessageDialog(this, ex13.getLocalizedMessage(), "Error!", 2);
+        } catch ( NumberFormatException ex14 )
+        {
+            JOptionPane.showMessageDialog(this, "Invalid Data Type: \n"+ex14.getLocalizedMessage(), "Error!", 2);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //Delete button
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String EquipID = txtEqmtID.getText();
-        
-        boolean result = EquipmentServiceLayer.DeleteEquipment(EquipID);
+        if (EquipID.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter valid Inventory ID", "Error!", 2);
+            } else {
+        boolean result = EquipmentServiceLayer.DeleteEquipment(EquipID, branchID);
         
         if (result) {
             txtEqmtID.setText("");
@@ -512,12 +658,51 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
             txtIsuCount.setText("");
             JOptionPane.showMessageDialog(this, "Record deleted successfully!");
         } else {
-            JOptionPane.showMessageDialog(this, "Data record is not available to update!");
-        }
+            JOptionPane.showMessageDialog(this, "Data record is not available to update!", "Error!", 2);
+        } }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    //Add to service button
+    private void btnAddToServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToServActionPerformed
+        try{
+            String EquipID = txtEqmtID.getText();
+            if (EquipID.trim().isEmpty()) {
+                throw new EquipIDNullException();
+            }
+            String stat = "Running since: "+java.time.LocalDate.now();
+            
+            boolean res = EquipmentServiceLayer.updateStatus(EquipID, stat, branchID);
+            if ( res == true )
+            {
+            txtEqmtID.setText("");
+            txtEqmtName.setText("");
+            txtEqmtModel.setText("");
+            txtEqmtSerialNo.setText("");
+            txtEqmtValue.setText("");
+            txtEqmtInvoiceNo.setText("");
+            txtEqmtWarrantyExpDate.setText("DD/MM/YYYY");
+            txtEqmInvoiceDate.setText("DD/MM/YYYY");
+            txtIsuCount.setText("");
+                JOptionPane.showMessageDialog(this, "Status updated successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed update status!", "Error!", 2);
+            }
+            
+            
+        } catch ( EquipIDNullException ex1 )
+        {
+            JOptionPane.showMessageDialog(this, ex1.getLocalizedMessage(), "Error!", 2);
+        }        
+    }//GEN-LAST:event_btnAddToServActionPerformed
+
+    private void tblSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSupplierMouseClicked
+        String supID = tblSupplier.getModel().getValueAt(tblSupplier.getSelectedRow(), 0).toString();
+       txtSupID.setText(supID);
+    }//GEN-LAST:event_tblSupplierMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddToServ;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -536,7 +721,10 @@ public class Manage_Equi_Panel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollBar jScrollBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblSupplier;
     private javax.swing.JTextField txtBrnID;
     private javax.swing.JTextField txtEqmInvoiceDate;
     private javax.swing.JTextField txtEqmtID;

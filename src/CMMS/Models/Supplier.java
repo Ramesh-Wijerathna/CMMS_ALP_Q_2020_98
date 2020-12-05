@@ -12,13 +12,13 @@ import java.util.logging.Logger;
  * @author kavin
  */
 public class Supplier {
-    int sup_ID;
+    String sup_ID;
     String compName;
     String supEmail;
     int supConNum;
     String supAddress;
 
-    public Supplier(int sup_ID, String compName, String supEmail, int supConNum, String supAddress) {
+    public Supplier(String sup_ID, String compName, String supEmail, int supConNum, String supAddress) {
         this.sup_ID = sup_ID;
         this.compName = compName;
         this.supEmail = supEmail;
@@ -26,7 +26,7 @@ public class Supplier {
         this.supAddress = supAddress;
     }
 
-    public int getSup_ID() {
+    public String getSup_ID() {
         return sup_ID;
     }
 

@@ -36,6 +36,9 @@ public class Branch_Manager extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lblBrnID = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         Change_Panel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -118,6 +121,22 @@ public class Branch_Manager extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setText("Branch ID :");
+
+        lblBrnID.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblBrnID.setText("1");
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("View Notes");
+        jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout Tab_PanelLayout = new javax.swing.GroupLayout(Tab_Panel);
         Tab_Panel.setLayout(Tab_PanelLayout);
         Tab_PanelLayout.setHorizontalGroup(
@@ -130,13 +149,23 @@ public class Branch_Manager extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                    .addGroup(Tab_PanelLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblBrnID, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
                 .addContainerGap())
         );
         Tab_PanelLayout.setVerticalGroup(
             Tab_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Tab_PanelLayout.createSequentialGroup()
-                .addGap(206, 206, 206)
+                .addGap(30, 30, 30)
+                .addGroup(Tab_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblBrnID, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                .addGap(126, 126, 126)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,7 +177,9 @@ public class Branch_Manager extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addGap(66, 66, 66)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         Change_Panel.setLayout(new java.awt.CardLayout());
@@ -193,11 +224,12 @@ public class Branch_Manager extends javax.swing.JFrame {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
        
         
+        
            Change_Panel.removeAll();
         Change_Panel.repaint();
         Change_Panel.revalidate();
-
-        Change_Panel.add(new Add_Equipment_Panel());
+   
+        Change_Panel.add(new Add_Equipment_Panel(lblBrnID.getText()));
         Change_Panel.repaint();
         Change_Panel.revalidate();
         
@@ -222,7 +254,7 @@ public class Branch_Manager extends javax.swing.JFrame {
         Change_Panel.repaint();
         Change_Panel.revalidate();
 
-        Change_Panel.add(new Manage_Equi_Panel());
+        Change_Panel.add(new Manage_Equi_Panel(lblBrnID.getText()));
         Change_Panel.repaint();
         Change_Panel.revalidate();
         
@@ -253,10 +285,20 @@ public class Branch_Manager extends javax.swing.JFrame {
         Change_Panel.repaint();
         Change_Panel.revalidate();
 
-        Change_Panel.add(new View_Inventory_Panel());
+        Change_Panel.add(new View_Inventory_Panel(lblBrnID.getText()));
         Change_Panel.repaint();
         Change_Panel.revalidate();
     }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        Change_Panel.removeAll();
+        Change_Panel.repaint();
+        Change_Panel.revalidate();
+
+        Change_Panel.add(new view_Note_Panel(lblBrnID.getText()));
+        Change_Panel.repaint();
+        Change_Panel.revalidate();
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments
@@ -303,6 +345,9 @@ public class Branch_Manager extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblBrnID;
     // End of variables declaration//GEN-END:variables
 }

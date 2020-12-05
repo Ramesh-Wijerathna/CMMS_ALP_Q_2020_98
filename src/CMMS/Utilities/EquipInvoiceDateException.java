@@ -14,6 +14,6 @@ public class EquipInvoiceDateException extends RuntimeException
     @Override
     public String getLocalizedMessage ()
     {
-        return "Invalid Equipment Invoice Date!\n (Equipment Invoice Date section can't be empty)";
+        return "Invalid Equipment Invoice Date!\n (or Equipment Invoice Date section can't be empty)";
     }
 }
