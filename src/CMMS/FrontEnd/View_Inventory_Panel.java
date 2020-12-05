@@ -38,8 +38,10 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
     /**
      * Creates new form View_Inventory_Panel
      */
-    public View_Inventory_Panel() {
+    int branchID = 0;
+    public View_Inventory_Panel( String brID ) {
         initComponents();
+        branchID = Integer.parseInt(brID);
         LoadInventory ();
     }
 
@@ -49,7 +51,7 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
     public void LoadInventory ()
     {
         String id = "";
-        ArrayList<Inventory> eqps = EquipmentServiceLayer.GetAllEquipments();
+        ArrayList<Inventory> eqps = EquipmentServiceLayer.GetAllEquipments(branchID);
         
         DefaultTableModel tbl = ( DefaultTableModel ) InventoryTable.getModel();
         tbl.setRowCount(0);
@@ -63,12 +65,12 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
             inv.getSelialNumber(),
             inv.getItemValue(),
             inv.getInvNum(),
-            inv.getBrnID(),
             inv.getSupID(),
             inv.getWarntDate(),
             inv.getInvDate(),
             inv.getIssCount(),
-            InventoryHealthManagement.CountIssues(id)
+            InventoryHealthManagement.CountIssues(id),
+            inv.getStatus()
             };
             tbl.addRow(rowData);
         }
@@ -89,6 +91,10 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
         txtSearch = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        chkDEqp = new javax.swing.JCheckBox();
+        chkREqp = new javax.swing.JCheckBox();
+        chkMEqp = new javax.swing.JCheckBox();
 
         jLabel1.setBackground(new java.awt.Color(153, 153, 153));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -126,10 +132,15 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Inventory ID", "Item Name", "Model", "Serial No", "Value", "Invoice No", "Branch ID", "Supplier ID", "Warranty Expire Date", "Warranty Exp Date", "Issue Count", "Health Status"
+                "Inventory ID", "Item Name", "Model", "Serial No", "Value", "Invoice No", "Supplier ID", "Warranty Expire Date", "Warranty Exp Date", "Issue Count", "Health Status", "Status"
             }
         ));
         InventoryTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        InventoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InventoryTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(InventoryTable);
 
         jLabel2.setText("Search by ID: ");
@@ -148,6 +159,34 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setText("Remove from Service");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        chkDEqp.setText("View decommissioned equipments");
+        chkDEqp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkDEqpActionPerformed(evt);
+            }
+        });
+
+        chkREqp.setText("View running equipments");
+        chkREqp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkREqpActionPerformed(evt);
+            }
+        });
+
+        chkMEqp.setText("View under maintenance equipments");
+        chkMEqp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkMEqpActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,20 +194,28 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 881, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chkREqp)
+                            .addComponent(chkDEqp)
+                            .addComponent(chkMEqp))
+                        .addGap(113, 113, 113)
                         .addComponent(jButton2)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 881, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1073, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -176,21 +223,30 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 459, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(34, 34, 34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 461, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(chkREqp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chkDEqp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chkMEqp)))
+                .addGap(37, 37, 37))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(76, 76, 76)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(76, Short.MAX_VALUE)))
+                    .addContainerGap(131, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //Search button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
@@ -199,7 +255,7 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
             if (EquipID.trim().isEmpty()) {
                 throw new EquipIDNullException();
             }
-            ArrayList<Inventory> seqps = EquipmentServiceLayer.SearchEquipment(EquipID);
+            ArrayList<Inventory> seqps = EquipmentServiceLayer.SearchEquipment(EquipID, branchID);
             if ( seqps.size() > 0 )
             {
                 DefaultTableModel tbl1 = ( DefaultTableModel ) InventoryTable.getModel();
@@ -214,12 +270,12 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
             inv.getSelialNumber(),
             inv.getItemValue(),
             inv.getInvNum(),
-            inv.getBrnID(),
             inv.getSupID(),
             inv.getWarntDate(),
             inv.getInvDate(),
             inv.getIssCount(),
-            InventoryHealthManagement.CountIssues(id)
+            InventoryHealthManagement.CountIssues(id),
+            inv.getStatus()
             };
             tbl1.addRow(rowData);
         }
@@ -233,13 +289,16 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //Generate a report button
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cmmsdb", "root", "");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //"com.mysql.jdbc.Driver"
+            con = DriverManager.getConnection("jdbc:mysql://bslroywzsqh3fcftsu5o-mysql.services.clever-cloud.com:3306/bslroywzsqh3fcftsu5o", "utypr1c6uytqkydk", "pZhh5L1Rr977ZGqe38AN");
+            //"jdbc:mysql://localhost:3306/cmmsdb", "root", ""
             JasperDesign invjDesign = JRXmlLoader.load("D:\\PPA\\CMMS_ALP_Q_2020_98-master\\src\\CMMS\\Reports\\Inventory.jrxml");
-            String sqlquery = "SELECT * FROM `inventory`";
+            String sqlquery = "SELECT * FROM `inventory` WHERE `brnID` = "+branchID+" AND `status` LIKE 'Running%';";
             
             JRDesignQuery updateQuery = new JRDesignQuery();
             updateQuery.setText(sqlquery);
@@ -247,7 +306,7 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
             
             JasperReport invJreport = JasperCompileManager.compileReport(invjDesign);
             JasperPrint invJpriint = JasperFillManager.fillReport ( invJreport, null, con );
-            JasperViewer.viewReport(invJpriint);
+            JasperViewer.viewReport(invJpriint,false);
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(View_Inventory_Panel.class.getName()).log(Level.SEVERE, null, ex);
@@ -258,11 +317,213 @@ public class View_Inventory_Panel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void InventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InventoryTableMouseClicked
+        String invId = InventoryTable.getModel().getValueAt(InventoryTable.getSelectedRow(), 0).toString();
+       txtSearch.setText(invId);
+    }//GEN-LAST:event_InventoryTableMouseClicked
+
+    //Remove from the service button
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try{
+            String EquipID = txtSearch.getText();
+            if (EquipID.trim().isEmpty()) {
+                throw new EquipIDNullException();
+            }
+            String stat = "Out of service since: "+java.time.LocalDate.now();
+            
+            boolean res = EquipmentServiceLayer.updateStatus(EquipID, stat, branchID);
+            
+            if ( res == true )
+            {
+                JOptionPane.showMessageDialog(this, "Status updated successfully!");
+                LoadInventory();
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed update status!", "Error!", 2);
+            }
+            
+        } catch ( EquipIDNullException ex1 )
+        {
+            JOptionPane.showMessageDialog(this, ex1.getLocalizedMessage(), "Error!", 2);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    //View decomissioned equiments
+    private void chkDEqpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkDEqpActionPerformed
+        String id1 = "";
+        if ( chkDEqp.isSelected() == true )
+        {
+            ArrayList<Inventory> dinv = EquipmentServiceLayer.GetDecommissionedEquipments(branchID);
+            
+            DefaultTableModel dtm1 = (DefaultTableModel) InventoryTable.getModel();
+            dtm1.setRowCount(0);
+            
+            for ( Inventory inv : dinv )
+        {
+            Object[] rowData = {
+            id1 = inv.getInID(),
+            inv.getItemName(),
+            inv.getModel(),
+            inv.getSelialNumber(),
+            inv.getItemValue(),
+            inv.getInvNum(),
+            inv.getSupID(),
+            inv.getWarntDate(),
+            inv.getInvDate(),
+            inv.getIssCount(),
+            InventoryHealthManagement.CountIssues(id1),
+            inv.getStatus()
+            };
+            dtm1.addRow(rowData);
+        }
+        } else {
+            
+        ArrayList<Inventory> eqps = EquipmentServiceLayer.GetAllEquipments(branchID);
+        
+        DefaultTableModel tbl = ( DefaultTableModel ) InventoryTable.getModel();
+        tbl.setRowCount(0);
+        
+        for ( Inventory inv : eqps )
+        {
+            Object[] rowData = {
+            id1 = inv.getInID(),
+            inv.getItemName(),
+            inv.getModel(),
+            inv.getSelialNumber(),
+            inv.getItemValue(),
+            inv.getInvNum(),
+            inv.getSupID(),
+            inv.getWarntDate(),
+            inv.getInvDate(),
+            inv.getIssCount(),
+            InventoryHealthManagement.CountIssues(id1),
+            inv.getStatus()
+            };
+            tbl.addRow(rowData);
+        }
+        }
+    }//GEN-LAST:event_chkDEqpActionPerformed
+
+    //View Running equipments
+    private void chkREqpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkREqpActionPerformed
+        String id2 = "";
+        if ( chkREqp.isSelected() == true )
+        {
+            ArrayList<Inventory> rinv = EquipmentServiceLayer.GetRunningEquipments(branchID);
+            
+            DefaultTableModel dtm2 = (DefaultTableModel) InventoryTable.getModel();
+            dtm2.setRowCount(0);
+            
+            for ( Inventory inv : rinv )
+        {
+            Object[] rowData = {
+            id2 = inv.getInID(),
+            inv.getItemName(),
+            inv.getModel(),
+            inv.getSelialNumber(),
+            inv.getItemValue(),
+            inv.getInvNum(),
+            inv.getSupID(),
+            inv.getWarntDate(),
+            inv.getInvDate(),
+            inv.getIssCount(),
+            InventoryHealthManagement.CountIssues(id2),
+            inv.getStatus()
+            };
+            dtm2.addRow(rowData);
+        }
+        } else {
+            
+        ArrayList<Inventory> eqps = EquipmentServiceLayer.GetAllEquipments(branchID);
+        
+        DefaultTableModel tbl = ( DefaultTableModel ) InventoryTable.getModel();
+        tbl.setRowCount(0);
+        
+        for ( Inventory inv : eqps )
+        {
+            Object[] rowData = {
+            id2 = inv.getInID(),
+            inv.getItemName(),
+            inv.getModel(),
+            inv.getSelialNumber(),
+            inv.getItemValue(),
+            inv.getInvNum(),
+            inv.getSupID(),
+            inv.getWarntDate(),
+            inv.getInvDate(),
+            inv.getIssCount(),
+            InventoryHealthManagement.CountIssues(id2),
+            inv.getStatus()
+            };
+            tbl.addRow(rowData);
+        }
+        }
+    }//GEN-LAST:event_chkREqpActionPerformed
+
+    //View undermaintenance equipments
+    private void chkMEqpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMEqpActionPerformed
+       String id3 = "";
+        if ( chkMEqp.isSelected() == true )
+        {
+            ArrayList<Inventory> uminv = EquipmentServiceLayer.GetUnderMaintenancedEquipments(branchID);
+            
+            DefaultTableModel dtm3 = (DefaultTableModel) InventoryTable.getModel();
+            dtm3.setRowCount(0);
+            
+            for ( Inventory inv : uminv )
+        {
+            Object[] rowData = {
+            id3 = inv.getInID(),
+            inv.getItemName(),
+            inv.getModel(),
+            inv.getSelialNumber(),
+            inv.getItemValue(),
+            inv.getInvNum(),
+            inv.getSupID(),
+            inv.getWarntDate(),
+            inv.getInvDate(),
+            inv.getIssCount(),
+            InventoryHealthManagement.CountIssues(id3),
+            inv.getStatus()
+            };
+            dtm3.addRow(rowData);
+        }
+        } else {
+            
+        ArrayList<Inventory> eqps = EquipmentServiceLayer.GetAllEquipments(branchID);
+        
+        DefaultTableModel tbl = ( DefaultTableModel ) InventoryTable.getModel();
+        tbl.setRowCount(0);
+        
+        for ( Inventory inv : eqps )
+        {
+            Object[] rowData = {
+            id3 = inv.getInID(),
+            inv.getItemName(),
+            inv.getModel(),
+            inv.getSelialNumber(),
+            inv.getItemValue(),
+            inv.getInvNum(),
+            inv.getSupID(),
+            inv.getWarntDate(),
+            inv.getInvDate(),
+            inv.getIssCount(),
+            InventoryHealthManagement.CountIssues(id3),
+            inv.getStatus()
+            };
+            tbl.addRow(rowData);
+        }
+        }
+    }//GEN-LAST:event_chkMEqpActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable InventoryTable;
+    private javax.swing.JCheckBox chkDEqp;
+    private javax.swing.JCheckBox chkMEqp;
+    private javax.swing.JCheckBox chkREqp;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
